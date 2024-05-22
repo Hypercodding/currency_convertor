@@ -79,6 +79,24 @@ const convertCurrency = async (amount, fromCurrency, toCurrency, rates) => {
     return convertedAmount;
 };
 
+
+const exch = document.querySelector("i")
+exch.addEventListener("click", () => {
+    const fromSelect = dropdowns[0];
+    const toSelect = dropdowns[1];
+
+    // Swap the selected values
+    const tempValue = fromSelect.value;
+    fromSelect.value = toSelect.value;
+    toSelect.value = tempValue;
+
+    // Update flags after swap
+    updateFlag(fromSelect);
+    updateFlag(toSelect);
+
+    // Trigger conversion after swap
+    form.dispatchEvent(new Event("submit"));
+});
 form.addEventListener("submit", async (event) => {
     event.preventDefault();
     const amount = parseFloat(amountInput.value);
@@ -91,5 +109,6 @@ form.addEventListener("submit", async (event) => {
 
 fetchExchangeRates().then(rates => {
     populateDropdowns();
+    // exchange()
     console.log('Exchange Rates:', rates);
 });
